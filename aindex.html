@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Movie Recommendation System</title>
+
+<style>
+body{
+font-family: Arial;
+background:#111;
+color:white;
+text-align:center;
+}
+
+input,button{
+padding:10px;
+margin:10px;
+font-size:16px;
+}
+
+table{
+margin:auto;
+border-collapse:collapse;
+width:80%;
+}
+
+th,td{
+border:1px solid white;
+padding:8px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🎬 Movie Recommendation System</h1>
+
+<input type="text" id="genreInput" placeholder="Enter Genre (Action, Drama)">
+<button onclick="recommendMovies()">Recommend</button>
+
+<h2>Recommended Movies</h2>
+
+<table id="movieTable">
+<tr>
+<th>Title</th>
+<th>Release Date</th>
+<th>Rating</th>
+<th>Genres</th>
+</tr>
+</table>
+
+<script>
+
+let movies=[];
+
+fetch("movies_dataset.csv")
+.then(response=>response.text())
+.then(data=>{
+let rows=data.split("\n");
+
+for(let i=1;i<rows.length;i++){
+let cols=rows[i].split(",");
+movies.push({
+title:cols[1],
+release_date:cols[5],
+rating:cols[2],
+genres:cols[19]
+});
+}
+});
+
+function recommendMovies(){
+
+let genre=document.getElementById("genreInput").value.toLowerCase();
+
+let table=document.getElementById("movieTable");
+
+table.innerHTML=`
+<tr>
+<th>Title</th>
+<th>Release Date</th>
+<th>Rating</th>
+<th>Genres</th>
+</tr>
+`;
+
+movies.forEach(movie=>{
+if(movie.genres && movie.genres.toLowerCase().includes(genre)){
+
+let row=table.insertRow();
+
+row.insertCell(0).innerHTML=movie.title;
+row.insertCell(1).innerHTML=movie.release_date;
+row.insertCell(2).innerHTML=movie.rating;
+row.insertCell(3).innerHTML=movie.genres;
+
+}
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
