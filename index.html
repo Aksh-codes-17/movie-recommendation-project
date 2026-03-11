@@ -1,45 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<title>Movie Recommendation System</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-</head>
-
-<body>
-
-<h1>🎬 Movie Recommendation System</h1>
 
 <form method="POST">
-
-<input type="text" name="genre" placeholder="Enter Genre (Action, Comedy, Drama)">
+<input name="genre" placeholder="Enter Genre">
 <button type="submit">Recommend</button>
-
 </form>
 
 <table>
-
 <tr>
 <th>Title</th>
 <th>Release Date</th>
 <th>Rating</th>
-<th>Genres</th>
+<th>Genre</th>
 <th>Overview</th>
 </tr>
 
-
-
-
-
-
+{% for movie in movies %}
+<tr>
+<td>{{ movie.title }}</td>
+<td>{{ movie.release_date }}</td>
+<td>{{ movie.vote_average }}</td>
+<td>{{ movie.genres }}</td>
+<td>{{ movie.overview }}</td>
+</tr>
+{% endfor %}
 
 </table>
-
-<script src="{{ url_for('static', filename='script.js') }}"></script>
-
-</body>
-</html>
 
 
 
