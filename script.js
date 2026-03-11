@@ -1,7 +1,14 @@
-document.querySelector("button").addEventListener("mouseover", function(){
-this.style.transform = "scale(1.1)";
-})
+async function getRecommendation() {
+    const movie = document.getElementById("movie").value;
 
-document.querySelector("button").addEventListener("mouseout", function(){
-this.style.transform = "scale(1)";
-})
+    const response = await fetch("/recommend", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ movie: movie })
+    });
+
+    const data = await response.json();
+    document.getElementById("result").innerText = data.join(", ");
+}
